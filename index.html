@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lutz Woodworks — Commercial Millwork & Casework · Wylie, TX</title>
+<meta name="description" content="Family-owned commercial millwork and casework since 1986. Precision fabrication and installation for hospitals, schools, and civic buildings across North Texas." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#f4efe6;
+  --paper-2:#efe8db;
+  --card:#fbf8f2;
+  --ink:#1f1a14;
+  --ink-2:#4a4137;
+  --ink-3:#776c5d;
+  --line:#ddd3c2;
+  --line-2:#cabfa9;
+  --walnut:#9a6634;
+  --walnut-deep:#7c4f25;
+  --espresso:#211b14;
+  --espresso-2:#2c241a;
+  --paper-on-dark:#ece3d3;
+  --muted-on-dark:#b3a690;
+  --serif:"Libre Caslon Display",Georgia,serif;
+  --sans:"Hanken Grotesk",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  --maxw:1240px;
+  --gut:clamp(20px,5vw,72px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--sans);
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.4;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  mix-blend-mode:multiply;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.04;letter-spacing:-.01em}
+::selection{background:var(--walnut);color:#fff}
+
+/* ---------- shared bits ---------- */
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--gut)}
+.eyebrow{
+  font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--walnut);font-weight:500;display:inline-flex;align-items:center;gap:.7em;
+}
+.eyebrow::before{content:"";width:26px;height:1px;background:var(--walnut);opacity:.6}
+.eyebrow.center::before{display:none}
+.btn{
+  font-family:var(--sans);font-weight:600;font-size:15px;letter-spacing:.01em;
+  display:inline-flex;align-items:center;gap:.6em;cursor:pointer;border:0;
+  padding:15px 26px;border-radius:2px;transition:transform .25s cubic-bezier(.2,.8,.2,1),background .25s,color .25s,box-shadow .25s;
+}
+.btn-primary{background:var(--walnut);color:#fff}
+.btn-primary:hover{background:var(--walnut-deep);transform:translateY(-2px);box-shadow:0 12px 24px -12px rgba(124,79,37,.7)}
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line-2)}
+.btn-ghost:hover{background:var(--ink);color:var(--paper);border-color:var(--ink);transform:translateY(-2px)}
+.btn-lg{padding:18px 34px;font-size:16px}
+.arrow{transition:transform .25s}
+.btn:hover .arrow{transform:translateX(4px)}
+
+/* placeholder image system */
+.ph{position:relative;overflow:hidden;background:var(--paper-2)}
+.ph::before{
+  content:"";position:absolute;inset:0;z-index:0;
+  background:
+    repeating-linear-gradient(135deg,transparent 0 13px,rgba(154,102,52,.10) 13px 14px),
+    linear-gradient(160deg,#e7dcc8,#d9ccb2);
+}
+.ph .ph-label{
+  position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#8a7a5f;text-align:center;padding:1em;
+}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;opacity:0;transition:opacity .9s ease}
+.ph img.loaded{opacity:1}
+
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- header ---------- */
+.head{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  transition:background .35s,box-shadow .35s,padding .35s,border-color .35s;
+  border-bottom:1px solid transparent;padding:18px 0;
+}
+.head.solid{background:rgba(244,239,230,.92);backdrop-filter:blur(10px);border-color:var(--line);box-shadow:0 8px 30px -22px rgba(31,26,20,.5);padding:12px 0}
+.head .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;flex-direction:column;line-height:1;gap:3px}
+.brand .name{font-family:var(--serif);font-size:23px;letter-spacing:.02em}
+.brand .sub{font-family:var(--mono);font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--ink-3)}
+.nav{display:flex;align-items:center;gap:30px}
+.nav a.link{font-size:14.5px;font-weight:500;color:var(--ink-2);position:relative;padding:4px 0;transition:color .2s}
+.nav a.link::after{content:"";position:absolute;left:0;bottom:-1px;width:0;height:1px;background:var(--walnut);transition:width .3s}
+.nav a.link:hover{color:var(--ink)}
+.nav a.link:hover::after{width:100%}
+.head-cta{display:flex;align-items:center;gap:18px}
+.tel{font-family:var(--mono);font-size:13.5px;font-weight:500;color:var(--ink);white-space:nowrap;display:flex;align-items:center;gap:.5em}
+.tel .dot{width:6px;height:6px;border-radius:50%;background:var(--walnut);display:inline-block}
+.menu-btn{display:none;background:none;border:1px solid var(--line-2);border-radius:2px;width:44px;height:42px;cursor:pointer;flex-direction:column;gap:5px;align-items:center;justify-content:center}
+.menu-btn span{width:20px;height:1.5px;background:var(--ink);transition:.3s}
+.menu-btn.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.menu-btn.open span:nth-child(2){opacity:0}
+.menu-btn.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+.mobile-nav{position:fixed;inset:0;z-index:99;background:var(--espresso);color:var(--paper-on-dark);display:flex;flex-direction:column;justify-content:center;gap:8px;padding:0 var(--gut);transform:translateY(-100%);transition:transform .5s cubic-bezier(.2,.8,.2,1);visibility:hidden}
+.mobile-nav.open{transform:none;visibility:visible}
+.mobile-nav a{font-family:var(--serif);font-size:clamp(30px,9vw,52px);padding:8px 0;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:baseline;gap:14px}
+.mobile-nav a .num{font-family:var(--mono);font-size:13px;color:var(--walnut)}
+.mobile-nav .m-foot{margin-top:34px;font-family:var(--mono);font-size:13px;color:var(--muted-on-dark);letter-spacing:.08em}
+
+/* ---------- hero ---------- */
+.hero{position:relative;padding-top:clamp(120px,17vh,180px);padding-bottom:clamp(40px,6vh,70px)}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,64px);align-items:end}
+.hero h1{font-size:clamp(44px,7vw,92px);letter-spacing:-.02em}
+.hero h1 em{font-style:italic;color:var(--walnut)}
+.hero .lede{font-size:clamp(17px,1.6vw,20px);color:var(--ink-2);max-width:34em;margin-top:26px}
+.hero .cta-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.hero-figure{aspect-ratio:4/5;border-radius:3px;box-shadow:0 40px 70px -45px rgba(31,26,20,.7);position:relative}
+.hero-figure .stamp{
+  position:absolute;right:-14px;bottom:26px;z-index:5;background:var(--espresso);color:var(--paper-on-dark);
+  padding:14px 18px;border-radius:2px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;line-height:1.5;
+  box-shadow:0 20px 40px -22px rgba(0,0,0,.6)}
+.hero-figure .stamp b{color:#fff;font-size:22px;font-family:var(--serif);font-weight:400;letter-spacing:0;display:block}
+
+/* stat strip */
+.stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:clamp(48px,7vh,86px)}
+.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.stat{padding:30px 26px 30px 0;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0;padding-right:0}
+.stat .k{font-family:var(--serif);font-size:clamp(30px,3.4vw,44px);line-height:1}
+.stat .l{font-size:13px;color:var(--ink-3);margin-top:8px;letter-spacing:.02em}
+.stat .l .mono{font-family:var(--mono)}
+
+/* ---------- section scaffolding ---------- */
+section{position:relative}
+.sec{padding:clamp(72px,11vh,128px) 0}
+.sec-head{display:grid;grid-template-columns:auto 1fr;gap:clamp(28px,6vw,90px);align-items:start;margin-bottom:clamp(40px,6vh,68px)}
+.sec-head .lhs{max-width:30ch}
+.sec-head h2{font-size:clamp(32px,4.4vw,58px);margin-top:18px}
+.sec-head .rhs{font-size:17px;color:var(--ink-2);max-width:42ch;padding-top:8px}
+.idx{font-family:var(--mono);font-size:12px;color:var(--ink-3);letter-spacing:.1em}
+
+/* ---------- positioning band ---------- */
+.creed{background:var(--espresso);color:var(--paper-on-dark)}
+.creed .wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(34px,6vw,80px);align-items:center}
+.creed h2{font-size:clamp(30px,4vw,52px);color:#fff}
+.creed h2 em{font-style:italic;color:var(--walnut)}
+.creed p{color:var(--muted-on-dark);font-size:16.5px;margin-top:20px}
+.creed p + p{margin-top:16px}
+.creed .eyebrow{color:#c89b6a}
+.creed .eyebrow::before{background:#c89b6a}
+
+/* ---------- services ---------- */
+.svc-list{border-top:1px solid var(--line)}
+.svc{
+  display:grid;grid-template-columns:80px 1fr 1.3fr auto;gap:clamp(18px,4vw,56px);
+  align-items:baseline;padding:30px 0;border-bottom:1px solid var(--line);
+  transition:padding-left .4s cubic-bezier(.2,.8,.2,1);position:relative;
+}
+.svc::after{content:"";position:absolute;left:0;bottom:-1px;height:1px;width:0;background:var(--walnut);transition:width .5s}
+.svc:hover{padding-left:14px}
+.svc:hover::after{width:100%}
+.svc .n{font-family:var(--mono);font-size:13px;color:var(--ink-3)}
+.svc h3{font-size:clamp(22px,2.5vw,30px)}
+.svc:hover h3{color:var(--walnut-deep)}
+.svc p{color:var(--ink-2);font-size:15.5px}
+.svc .go{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap;display:flex;align-items:center;gap:.5em;transition:color .3s}
+.svc:hover .go{color:var(--walnut)}
+
+/* ---------- projects ---------- */
+.projects{background:var(--paper-2)}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.4vw,30px)}
+.proj{background:var(--card);border:1px solid var(--line);border-radius:3px;overflow:hidden;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s,border-color .4s;cursor:pointer}
+.proj:hover{transform:translateY(-6px);box-shadow:0 34px 50px -34px rgba(31,26,20,.55);border-color:var(--line-2)}
+.proj .pic{aspect-ratio:4/3}
+.proj .pic img{transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.proj:hover .pic img.loaded{transform:scale(1.05)}
+.proj .body{padding:22px 24px 26px}
+.proj .tag{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--walnut);display:flex;justify-content:space-between}
+.proj h3{font-size:24px;margin-top:12px}
+.proj .meta{font-size:13.5px;color:var(--ink-3);margin-top:8px}
+
+/* ---------- sectors ---------- */
+.sectors .wrap{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(32px,6vw,80px);align-items:center}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.chip{font-size:14px;font-weight:500;padding:10px 18px;border:1px solid var(--line-2);border-radius:100px;color:var(--ink-2);background:var(--card);transition:.25s}
+.chip:hover{background:var(--ink);color:var(--paper);border-color:var(--ink);transform:translateY(-2px)}
+.sectors .note{margin-top:26px;font-size:14.5px;color:var(--ink-3)}
+.sectors .note b{color:var(--ink);font-weight:600}
+
+/* ---------- testimonials ---------- */
+.quotes{background:var(--espresso);color:var(--paper-on-dark)}
+.q-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,2.6vw,36px);margin-top:18px}
+.q{border-top:2px solid var(--walnut);padding-top:24px}
+.q blockquote{font-family:var(--serif);font-size:clamp(20px,1.7vw,25px);line-height:1.32;color:#fff}
+.q .by{margin-top:22px;font-size:13.5px;color:var(--muted-on-dark);line-height:1.45}
+.q .by b{color:var(--paper-on-dark);font-weight:600;display:block;font-family:var(--sans)}
+.q-note{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted-on-dark);margin-top:44px;opacity:.75}
+
+/* ---------- about ---------- */
+.about .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(34px,6vw,80px);align-items:center}
+.about h2{font-size:clamp(30px,4vw,52px);margin-top:16px}
+.about h2 em{font-style:italic;color:var(--walnut)}
+.about p{color:var(--ink-2);font-size:16.5px;margin-top:18px}
+.about .award{margin-top:28px;display:flex;gap:16px;align-items:center;padding:20px 22px;background:var(--card);border:1px solid var(--line);border-radius:3px}
+.about .award .seal{flex:none;width:54px;height:54px;border-radius:50%;border:2px solid var(--walnut);display:grid;place-items:center;font-family:var(--mono);font-size:11px;font-weight:500;color:var(--walnut);text-align:center;line-height:1.1}
+.about .award .t{font-size:14px;color:var(--ink-2)}
+.about .award .t b{color:var(--ink);font-weight:600}
+.about-figure{aspect-ratio:3/4;border-radius:3px;box-shadow:0 40px 70px -50px rgba(31,26,20,.7)}
+.hiring{margin-top:22px;font-size:14px;color:var(--ink-3);padding-left:16px;border-left:2px solid var(--walnut)}
+.hiring b{color:var(--ink);font-weight:600}
+
+/* ---------- bid CTA + form ---------- */
+.bid{background:var(--paper-2);border-top:1px solid var(--line)}
+.bid .wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(34px,6vw,78px);align-items:start}
+.bid h2{font-size:clamp(34px,4.6vw,60px)}
+.bid h2 em{font-style:italic;color:var(--walnut)}
+.bid .lede{font-size:17px;color:var(--ink-2);margin-top:22px;max-width:32em}
+.bid .contact-lines{margin-top:34px;display:flex;flex-direction:column;gap:14px}
+.bid .cl{display:flex;gap:14px;align-items:baseline;font-size:15px}
+.bid .cl .lab{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);width:64px;flex:none}
+.bid .cl a{border-bottom:1px solid var(--line-2);transition:.2s}
+.bid .cl a:hover{color:var(--walnut);border-color:var(--walnut)}
+
+form.bidform{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:clamp(24px,3vw,38px);box-shadow:0 30px 60px -50px rgba(31,26,20,.6)}
+.fr{margin-bottom:18px}
+.fr.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:7px}
+.req{color:var(--walnut)}
+input,select,textarea{
+  width:100%;font-family:var(--sans);font-size:15px;color:var(--ink);background:var(--paper);
+  border:1px solid var(--line-2);border-radius:2px;padding:12px 14px;transition:border-color .2s,box-shadow .2s;
+}
+input::placeholder,textarea::placeholder{color:#a99c86}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--walnut);box-shadow:0 0 0 3px rgba(154,102,52,.14)}
+textarea{resize:vertical;min-height:96px}
+input.err,select.err,textarea.err{border-color:#b4472f;box-shadow:0 0 0 3px rgba(180,71,47,.12)}
+.err-msg{display:none;color:#b4472f;font-size:12px;margin-top:6px;font-weight:500}
+.err-msg.show{display:block}
+form.bidform .btn{width:100%;justify-content:center;margin-top:6px}
+.form-foot{font-size:12.5px;color:var(--ink-3);margin-top:14px;text-align:center}
+.success{display:none;text-align:center;padding:20px 8px}
+.success.show{display:block;animation:pop .5s ease}
+@keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+.success .check{width:62px;height:62px;border-radius:50%;background:var(--walnut);color:#fff;display:grid;place-items:center;margin:0 auto 18px;font-size:30px}
+.success h3{font-size:28px}
+.success p{color:var(--ink-2);margin-top:10px;font-size:15.5px}
+
+/* ---------- footer ---------- */
+.foot{background:var(--espresso);color:var(--paper-on-dark);padding:clamp(56px,8vh,86px) 0 30px}
+.foot-top{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;padding-bottom:46px;border-bottom:1px solid rgba(255,255,255,.1)}
+.foot .brand .name{color:#fff}
+.foot .brand .sub{color:var(--muted-on-dark)}
+.foot .blurb{color:var(--muted-on-dark);font-size:14.5px;margin-top:18px;max-width:32ch}
+.foot h4{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--walnut);margin-bottom:18px;font-weight:500}
+.foot ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.foot ul a,.foot address{color:var(--paper-on-dark);font-style:normal;font-size:14.5px;transition:color .2s}
+.foot ul a:hover{color:#fff}
+.foot address{line-height:1.7;color:var(--muted-on-dark)}
+.foot address b{color:var(--paper-on-dark);font-weight:400}
+.foot-bot{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;padding-top:24px;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--muted-on-dark)}
+
+/* ---------- responsive ---------- */
+@media(max-width:980px){
+  .nav,.head-cta .tel{display:none}
+  .menu-btn{display:flex}
+  .hero-grid{grid-template-columns:1fr}
+  .hero-figure{aspect-ratio:16/10;order:-1;max-height:46vh;margin-bottom:6px}
+  .creed .wrap,.sectors .wrap,.about .wrap,.bid .wrap{grid-template-columns:1fr}
+  .sec-head{grid-template-columns:1fr}
+  .proj-grid{grid-template-columns:1fr 1fr}
+  .q-grid{grid-template-columns:1fr}
+  .foot-top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .stats .wrap{grid-template-columns:1fr 1fr}
+  .stat{padding:22px 18px 22px 0}
+  .stat:nth-child(2){border-right:0;padding-right:0}
+  .stat:nth-child(1),.stat:nth-child(2){border-bottom:1px solid var(--line)}
+  .svc{grid-template-columns:1fr;gap:8px;padding:24px 0}
+  .svc .n{display:none}
+  .svc .go{display:none}
+  .proj-grid{grid-template-columns:1fr}
+  .fr.two{grid-template-columns:1fr}
+  .foot-top{grid-template-columns:1fr}
+  .about-figure{aspect-ratio:16/10;order:-1}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="head" id="head">
+  <div class="wrap">
+    <a href="#top" class="brand" aria-label="Lutz Woodworks home">
+      <span class="name">Lutz Woodworks</span>
+      <span class="sub">Est. 1986 · Wylie, TX</span>
+    </a>
+    <nav class="nav">
+      <a class="link" href="#services">Services</a>
+      <a class="link" href="#projects">Projects</a>
+      <a class="link" href="#about">About</a>
+      <a class="link" href="#bid">Contact</a>
+    </nav>
+    <div class="head-cta">
+      <a class="tel" href="tel:+19724295521"><span class="dot"></span>(972) 429-5521</a>
+      <a class="btn btn-primary" href="#bid">Request a Bid</a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== MOBILE NAV ===== -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#services"><span class="num">01</span> Services</a>
+  <a href="#projects"><span class="num">02</span> Projects</a>
+  <a href="#about"><span class="num">03</span> About</a>
+  <a href="#bid"><span class="num">04</span> Request a Bid</a>
+  <div class="m-foot">700 Parker Road Loop · Wylie, TX 75098<br/>(972) 429-5521</div>
+</div>
+
+<a id="top"></a>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow">Commercial Millwork &amp; Casework · North Texas</span>
+      <h1>Built like <em>family.</em><br/>Trusted like a pro.</h1>
+      <p class="lede">Since 1986, Lutz Woodworks has fabricated and installed precision casework, solid surface, and custom millwork for the hospitals, schools, and civic buildings of North Texas — a family shop that treats every job as its only job.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary btn-lg" href="#bid">Request a Bid <span class="arrow">→</span></a>
+        <a class="btn btn-ghost btn-lg" href="#projects">See Our Work</a>
+      </div>
+    </div>
+    <div class="hero-figure ph">
+      <span class="ph-label">Hero — finished casework / installed project</span>
+      <img data-src="https://lutzwoodworks.com/wp-content/uploads/2014/10/2.jpg" alt="Lutz Woodworks installed commercial casework" />
+      <div class="stamp">Family-owned since<b>1986</b></div>
+    </div>
+  </div>
+
+  <!-- stats -->
+  <div class="stats">
+    <div class="wrap">
+      <div class="stat"><div class="k">39</div><div class="l">Years of <span class="mono">North Texas</span> millwork</div></div>
+      <div class="stat"><div class="k">2nd</div><div class="l">Generation, family-owned &amp; operated</div></div>
+      <div class="stat"><div class="k">1000s</div><div class="l">Cabinets, counters &amp; mill packages set</div></div>
+      <div class="stat"><div class="k">In-house</div><div class="l">Drafting, fabrication &amp; pre-finishing</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CREED ===== -->
+<section class="sec creed reveal">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Our Standard</span>
+      <h2>We treat each job as our <em>only</em> job.</h2>
+    </div>
+    <div>
+      <p>For nearly four decades we've used state-of-the-art technology to produce and install accurate plastic-laminate casework, solid-surface fabrications, and custom mill packages — including pre-finishing — for some of the region's most demanding builders.</p>
+      <p>We work under contract for General Contractors, Construction Managers, and Owners, making sure the design professional's intent is accomplished on every detail, every scribe, every reveal.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICES ===== -->
+<section class="sec" id="services">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lhs">
+        <span class="idx">01 / Services</span>
+        <h2>What we build</h2>
+      </div>
+      <p class="rhs">From shop drawings to the final installed reveal, the whole package lives under one roof — drafted, fabricated, pre-finished, and set by our own crews.</p>
+    </div>
+
+    <div class="svc-list">
+      <div class="svc reveal">
+        <div class="n">(01)</div>
+        <h3>Casework</h3>
+        <p>Plastic-laminate and custom casework fabricated in-house — cabinets, counters, and built-ins held to architectural tolerances.</p>
+        <div class="go">Fabrication →</div>
+      </div>
+      <div class="svc reveal">
+        <div class="n">(02)</div>
+        <h3>Millwork</h3>
+        <p>Custom mill packages with pre-finishing — standing and running trim, paneling, and architectural woodwork.</p>
+        <div class="go">Custom →</div>
+      </div>
+      <div class="svc reveal">
+        <div class="n">(03)</div>
+        <h3>Drafting</h3>
+        <p>In-house shop drawings and engineering that honor the design professional's intent before a single board is cut.</p>
+        <div class="go">In-house →</div>
+      </div>
+      <div class="svc reveal">
+        <div class="n">(04)</div>
+        <h3>Installation</h3>
+        <p>Experienced crews that set, scribe, and finish on schedule and to spec, on jobsites across North Texas.</p>
+        <div class="go">Field crews →</div>
+      </div>
+      <div class="svc reveal">
+        <div class="n">(05)</div>
+        <h3>Solid Surface Fabrications</h3>
+        <p>Seamless solid-surface countertops, transaction tops, and wall cladding built for high-use commercial spaces.</p>
+        <div class="go">Seamless →</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROJECTS ===== -->
+<section class="sec projects" id="projects">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lhs">
+        <span class="idx">02 / Selected Work</span>
+        <h2>Built across<br/>North Texas</h2>
+      </div>
+      <p class="rhs">Civic landmarks, hospitals, and public spaces — the kind of work that has to be right the first time and last for decades.</p>
+    </div>
+
+    <div class="proj-grid">
+      <article class="proj reveal" tabindex="0">
+        <div class="pic ph"><span class="ph-label">Wylie City Hall photo</span><img data-src="https://lutzwoodworks.com/wp-content/uploads/2014/10/1.jpg" alt="Wylie City Hall millwork" /></div>
+        <div class="body">
+          <div class="tag"><span>Civic</span><span>Wylie, TX</span></div>
+          <h3>Wylie City Hall</h3>
+          <p class="meta">Council chambers casework, custom millwork, and solid-surface throughout the municipal complex.</p>
+        </div>
+      </article>
+      <article class="proj reveal" tabindex="0">
+        <div class="pic ph"><span class="ph-label">Seton Medical Center photo</span><img data-src="https://lutzwoodworks.com/wp-content/uploads/2014/10/3.jpg" alt="Seton Medical Center Hays casework" /></div>
+        <div class="body">
+          <div class="tag"><span>Healthcare</span><span>Kyle, TX</span></div>
+          <h3>Seton Medical Center — Hays</h3>
+          <p class="meta">Nurse stations, patient-room casework, and solid-surface fabrications for a full-service hospital.</p>
+        </div>
+      </article>
+      <article class="proj reveal" tabindex="0">
+        <div class="pic ph"><span class="ph-label">Dallas Zoo photo</span><img data-src="https://lutzwoodworks.com/wp-content/uploads/2014/10/9-Dallas-Zoo.jpg" alt="Dallas Zoo millwork" /></div>
+        <div class="body">
+          <div class="tag"><span>Hospitality</span><span>Dallas, TX</span></div>
+          <h3>Dallas Zoo</h3>
+          <p class="meta">Concession, retail, and visitor-facing millwork built to take heavy public use day after day.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTORS ===== -->
+<section class="sec sectors">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="idx">03 / Who We Build For</span>
+      <h2 style="font-size:clamp(30px,4vw,52px);margin-top:16px;">Trusted where it<br/>has to hold up.</h2>
+    </div>
+    <div class="reveal">
+      <div class="chips">
+        <span class="chip">Hospitals</span>
+        <span class="chip">Schools</span>
+        <span class="chip">Banks</span>
+        <span class="chip">Retail Stores</span>
+        <span class="chip">Hotels</span>
+        <span class="chip">Medical Offices</span>
+        <span class="chip">Assisted Living</span>
+        <span class="chip">Chain Restaurants</span>
+        <span class="chip">Country Clubs</span>
+      </div>
+      <p class="note">We've completed extensive fabrication, installation, and remodeling for <b>General Contractors, Construction Managers, and Owners</b> — delivering the design professional's intent, on schedule, every time.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section class="sec quotes">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">In Their Words</span>
+      <h2 style="font-size:clamp(30px,4vw,50px);color:#fff;margin-top:16px;max-width:18ch;">Builders come back to us.</h2>
+    </div>
+    <div class="q-grid">
+      <div class="q reveal">
+        <blockquote>"Their crews scribe to a wall like nobody else. We hand them the toughest scope on a hospital floor and never think about it again."</blockquote>
+        <div class="by"><b>Project Manager</b>General Contractor · DFW Healthcare</div>
+      </div>
+      <div class="q reveal">
+        <blockquote>"Shop drawings came back clean and on time. They protected our design intent down to the reveal — exactly what an architect hopes for."</blockquote>
+        <div class="by"><b>Principal Architect</b>North Texas Design Firm</div>
+      </div>
+      <div class="q reveal">
+        <blockquote>"A small-town shop that performs like a national subcontractor. Quality, schedule, and a handshake you can trust."</blockquote>
+        <div class="by"><b>Owner's Representative</b>Civic Facility Project</div>
+      </div>
+    </div>
+    <p class="q-note">// Placeholder quotes — replace with real client testimonials once approved.</p>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section class="sec about" id="about">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="idx">04 / Our Story</span>
+      <h2>A family business, <em>since 1986.</em></h2>
+      <p>Lutz Woodworks has spent nearly four decades doing one thing well: building and installing commercial casework and millwork that lasts. We're a family-owned shop in Wylie, Texas, and we've grown by earning the trust of the region's largest builders — one detail, one jobsite, one handshake at a time.</p>
+      <p>Small-town values, big-corporate work. It's how we've always run, and it's why generals and owners keep calling back.</p>
+      <div class="award">
+        <div class="seal">EST.<br/>1986</div>
+        <div class="t"><b>Large Business of the Year</b> — awarded by the Wylie Area Chamber of Commerce.</div>
+      </div>
+      <p class="hiring"><b>We're hiring.</b> Experienced cabinet &amp; millwork installers — call the office or stop by to apply. All applicants drug screened.</p>
+    </div>
+    <div class="about-figure ph reveal">
+      <span class="ph-label">Shop / crew / craftsmanship photo</span>
+      <img data-src="https://lutzwoodworks.com/wp-content/uploads/2014/10/4.jpg" alt="Lutz Woodworks shop and craftsmanship" />
+    </div>
+  </div>
+</section>
+
+<!-- ===== BID / CONTACT ===== -->
+<section class="sec bid" id="bid">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">Start a Project</span>
+      <h2>Have a project<br/>out for <em>bid?</em></h2>
+      <p class="lede">Send us the scope and we'll get you a number. Plans, casework schedules, and finish specs all welcome — the more detail, the tighter the bid.</p>
+      <div class="contact-lines">
+        <div class="cl"><span class="lab">Call</span><a href="tel:+19724295521">(972) 429-5521</a></div>
+        <div class="cl"><span class="lab">Fax</span><span>(972) 442-1612</span></div>
+        <div class="cl"><span class="lab">Shop</span><span>700 Parker Road Loop, Wylie, TX 75098</span></div>
+        <div class="cl"><span class="lab">Hours</span><span>Mon–Fri, 7:00a–4:00p CT</span></div>
+      </div>
+    </div>
+
+    <div>
+      <form class="bidform" id="bidForm" novalidate>
+        <div class="fr two">
+          <div>
+            <label for="name">Name <span class="req">*</span></label>
+            <input id="name" name="name" type="text" placeholder="Jane Builder" />
+            <div class="err-msg" data-for="name">Please enter your name.</div>
+          </div>
+          <div>
+            <label for="company">Company</label>
+            <input id="company" name="company" type="text" placeholder="Acme Construction" />
+          </div>
+        </div>
+        <div class="fr two">
+          <div>
+            <label for="role">You are a <span class="req">*</span></label>
+            <select id="role" name="role">
+              <option value="">Select…</option>
+              <option>General Contractor</option>
+              <option>Construction Manager</option>
+              <option>Architect / Designer</option>
+              <option>Building Owner</option>
+              <option>Other</option>
+            </select>
+            <div class="err-msg" data-for="role">Please choose one.</div>
+          </div>
+          <div>
+            <label for="ptype">Project type</label>
+            <select id="ptype" name="ptype">
+              <option value="">Select…</option>
+              <option>Healthcare</option>
+              <option>Education / School</option>
+              <option>Civic / Government</option>
+              <option>Retail / Bank</option>
+              <option>Hospitality / Restaurant</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="fr two">
+          <div>
+            <label for="email">Email <span class="req">*</span></label>
+            <input id="email" name="email" type="email" placeholder="jane@acme.com" />
+            <div class="err-msg" data-for="email">Enter a valid email.</div>
+          </div>
+          <div>
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="tel" placeholder="(000) 000-0000" />
+          </div>
+        </div>
+        <div class="fr">
+          <label for="msg">Scope / details <span class="req">*</span></label>
+          <textarea id="msg" name="msg" placeholder="Tell us about the casework & millwork scope, square footage, bid date…"></textarea>
+          <div class="err-msg" data-for="msg">A few details, please.</div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg">Send Bid Request <span class="arrow">→</span></button>
+        <p class="form-foot">We typically respond within one business day.</p>
+      </form>
+
+      <div class="success" id="success">
+        <div class="check">✓</div>
+        <h3>Request received.</h3>
+        <p>Thanks — we'll review your scope and get back to you within one business day. For anything urgent, call <b>(972) 429-5521</b>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <div class="brand">
+          <span class="name" style="font-size:24px;">Lutz Woodworks</span>
+          <span class="sub" style="font-family:var(--mono);font-size:10px;letter-spacing:.32em;text-transform:uppercase;">Est. 1986 · Wylie, TX</span>
+        </div>
+        <p class="blurb">Family-owned commercial millwork &amp; casework, building across North Texas since 1986.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#bid">Request a Bid</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <address>
+          <b>700 Parker Road Loop</b><br/>
+          Wylie, TX 75098<br/><br/>
+          Tel <b>(972) 429-5521</b><br/>
+          Fax (972) 442-1612
+        </address>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© <span id="yr"></span> Lutz Woodworks, LLC. All rights reserved.</span>
+      <span>Small-town values · Big corporate work</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // year
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // sticky header
+  var head = document.getElementById('head');
+  var onScroll = function(){ head.classList.toggle('solid', window.scrollY > 24); };
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+
+  // mobile nav
+  var mb = document.getElementById('menuBtn'), mn = document.getElementById('mobileNav');
+  var setMenu = function(open){ mb.classList.toggle('open',open); mn.classList.toggle('open',open); document.body.style.overflow = open?'hidden':''; };
+  mb.addEventListener('click', function(){ setMenu(!mn.classList.contains('open')); });
+  mn.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setMenu(false); }); });
+
+  // lazy images with graceful fallback (keeps placeholder if blocked / offline)
+  document.querySelectorAll('.ph img[data-src]').forEach(function(img){
+    var src = img.getAttribute('data-src');
+    img.addEventListener('load', function(){ img.classList.add('loaded'); });
+    img.addEventListener('error', function(){ img.style.display='none'; });
+    img.src = src;
+  });
+
+  // reveal on scroll
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+  // form validation
+  var form = document.getElementById('bidForm'), success = document.getElementById('success');
+  var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  function fieldErr(id, on){
+    var el = document.getElementById(id);
+    var msg = form.querySelector('.err-msg[data-for="'+id+'"]');
+    el.classList.toggle('err', on);
+    if(msg) msg.classList.toggle('show', on);
+  }
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var ok = true;
+    var name = document.getElementById('name').value.trim();
+    var role = document.getElementById('role').value;
+    var email = document.getElementById('email').value.trim();
+    var msg = document.getElementById('msg').value.trim();
+    if(!name){ fieldErr('name',true); ok=false; } else fieldErr('name',false);
+    if(!role){ fieldErr('role',true); ok=false; } else fieldErr('role',false);
+    if(!emailRe.test(email)){ fieldErr('email',true); ok=false; } else fieldErr('email',false);
+    if(msg.length<4){ fieldErr('msg',true); ok=false; } else fieldErr('msg',false);
+    if(!ok){
+      var firstErr = form.querySelector('.err');
+      if(firstErr) firstErr.focus();
+      return;
+    }
+    form.style.display='none';
+    success.classList.add('show');
+    success.scrollIntoView({behavior:'smooth', block:'center'});
+  });
+  // clear error as user fixes it
+  ['name','role','email','msg'].forEach(function(id){
+    var el = document.getElementById(id);
+    el.addEventListener('input', function(){ if(el.classList.contains('err')) fieldErr(id,false); });
+    el.addEventListener('change', function(){ if(el.classList.contains('err')) fieldErr(id,false); });
+  });
+})();
+</script>
+</body>
+</html>
