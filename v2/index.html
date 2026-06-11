@@ -127,6 +127,39 @@
   .intro blockquote .accent{color:var(--oak)}
   .intro .body p{color:var(--slate);margin-bottom:1rem}
 
+  /* process accordion */
+  .process{background:var(--paper-2)}
+  .acc{display:flex;gap:.6rem;height:480px}
+  .panel{
+    flex:1;min-width:0;position:relative;overflow:hidden;cursor:pointer;border:none;
+    padding:0;text-align:left;font-family:var(--body);border-radius:2px;
+    transition:flex .55s cubic-bezier(.4,0,.2,1);color:#fff;display:block;
+  }
+  .panel .bg{position:absolute;inset:0;transition:transform .6s ease}
+  .panel:hover .bg{transform:scale(1.04)}
+  .panel .shade{position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(13,33,80,.25) 0%,rgba(13,33,80,.55) 55%,rgba(10,22,52,.92) 100%);
+    transition:background .4s ease}
+  .panel.active{flex:3.4}
+  .panel .photonote{position:absolute;top:12px;right:14px;font-family:var(--mono);font-size:.56rem;
+    letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55);z-index:2}
+  .panel .closed-label{
+    position:absolute;left:50%;bottom:1.4rem;transform:translateX(-50%) rotate(180deg);
+    writing-mode:vertical-rl;white-space:nowrap;z-index:2;
+    font-family:var(--mono);font-size:.74rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+    transition:opacity .25s ease}
+  .panel .pno{position:absolute;top:1.1rem;left:50%;transform:translateX(-50%);z-index:2;
+    font-family:var(--mono);font-size:.7rem;color:var(--oak-light);transition:opacity .25s ease}
+  .panel .open-body{
+    position:absolute;left:0;right:0;bottom:0;z-index:2;padding:1.7rem 1.8rem;
+    opacity:0;transform:translateY(14px);transition:opacity .35s ease .18s,transform .35s ease .18s}
+  .panel .open-body .ono{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;color:var(--oak-light)}
+  .panel .open-body h3{font-size:1.5rem;font-weight:800;margin:.45rem 0 .5rem;letter-spacing:-.01em}
+  .panel .open-body p{font-size:.93rem;color:rgba(255,255,255,.85);max-width:46ch;line-height:1.55}
+  .panel.active .closed-label,.panel.active .pno{opacity:0}
+  .panel.active .open-body{opacity:1;transform:translateY(0)}
+  .panel:focus-visible{outline:3px solid var(--cobalt-bright);outline-offset:2px}
+
   /* services */
   .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
   .svc{border:1px solid var(--line);border-top:3px solid var(--cobalt);padding:2rem 1.7rem 1.7rem;
@@ -140,26 +173,8 @@
   .more .arr{transition:transform .2s ease}
   .svc:hover .more .arr,.newscard:hover .more .arr{transform:translateX(4px)}
 
-  /* ERP feature band */
-  .erp{background:var(--cobalt-900);color:#fff;position:relative;overflow:hidden}
-  .erp::after{content:"";position:absolute;right:-80px;top:-80px;width:360px;height:360px;
-    border:1px solid rgba(255,255,255,.08);border-radius:50%}
-  .erp::before{content:"";position:absolute;right:30px;top:30px;width:240px;height:240px;
-    border:1px solid rgba(255,255,255,.06);border-radius:50%}
-  .erp-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;position:relative;z-index:1}
-  .erp h2{font-size:clamp(1.9rem,3.4vw,2.6rem);font-weight:800;margin-top:.9rem}
-  .erp p{color:rgba(255,255,255,.8);margin-top:1.1rem;font-size:1.06rem;max-width:46ch}
-  .erp-panel{background:var(--cobalt-800);border:1px solid rgba(255,255,255,.14);padding:1.6rem}
-  .erp-row{display:flex;justify-content:space-between;align-items:center;padding:.85rem 0;
-    border-bottom:1px solid rgba(255,255,255,.12);font-size:.9rem}
-  .erp-row:last-child{border-bottom:none}
-  .erp-row .lab{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;color:var(--oak-light);text-transform:uppercase}
-  .erp-row .bar{flex:1;height:6px;background:rgba(255,255,255,.14);margin:0 1rem;border-radius:3px;position:relative;overflow:hidden}
-  .erp-row .bar i{position:absolute;left:0;top:0;height:100%;background:var(--cobalt-bright);border-radius:3px}
-  .erp-row .pct{font-family:var(--mono);font-size:.8rem;min-width:42px;text-align:right}
-
   /* markets */
-  .markets{background:var(--paper)}
+  .markets{background:var(--white)}
   .mkt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
     border:1px solid var(--line)}
   .mkt{background:#fff;padding:1.7rem 1.4rem;transition:background .2s ease}
@@ -239,7 +254,11 @@
   @media(max-width:980px){
     .menu{display:none}
     .hamburger{display:flex}
-    .intro-grid,.erp-grid,.wo-grid{grid-template-columns:1fr;gap:2rem}
+    .acc{flex-direction:column;height:auto}
+    .panel{flex:none;min-height:200px}
+    .panel .closed-label,.panel .pno{display:none}
+    .panel .open-body{opacity:1;transform:none;position:relative;padding:5.5rem 1.5rem 1.5rem}
+    .intro-grid,.wo-grid{grid-template-columns:1fr;gap:2rem}
     .svc-grid,.three{grid-template-columns:1fr}
     .mkt-grid{grid-template-columns:repeat(2,1fr)}
     .pcard{flex:0 0 calc((100% - 1.5rem)/2)}
@@ -358,20 +377,75 @@
   </div>
 </section>
 
-<!-- ===== ERP DIFFERENTIATOR ===== -->
-<section class="erp">
-  <div class="wrap erp-grid">
-    <div>
-      <span class="spec on-dark">The difference</span>
-      <h2>Every project, tracked in real time.</h2>
-      <p>An industry-leading ERP system gives every job real-time tracking and detailed scheduling — so production stays aligned with your construction schedule, and you always know exactly where your scope stands.</p>
+<!-- ===== PROVEN PROCESS ACCORDION ===== -->
+<section class="process">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="spec">How we deliver</span>
+      <h2>A proven process, start to finish.</h2>
+      <p>Expert craftsmanship and disciplined project management carry every scope from preconstruction through installation.</p>
     </div>
-    <div class="erp-panel" aria-hidden="true">
-      <div class="erp-row"><span class="lab">Shop drawings</span><span class="bar"><i style="width:100%"></i></span><span class="pct">100%</span></div>
-      <div class="erp-row"><span class="lab">Material release</span><span class="bar"><i style="width:88%"></i></span><span class="pct">88%</span></div>
-      <div class="erp-row"><span class="lab">Fabrication</span><span class="bar"><i style="width:64%"></i></span><span class="pct">64%</span></div>
-      <div class="erp-row"><span class="lab">Finishing</span><span class="bar"><i style="width:31%"></i></span><span class="pct">31%</span></div>
-      <div class="erp-row"><span class="lab">Delivery / install</span><span class="bar"><i style="width:0%"></i></span><span class="pct">On sched.</span></div>
+    <div class="acc" id="acc">
+      <button class="panel active" type="button">
+        <span class="bg" style="background:linear-gradient(150deg,#16357E,#0D2150)"></span>
+        <span class="shade"></span>
+        <span class="photonote">Photo</span>
+        <span class="pno">01</span>
+        <span class="closed-label">Design Assist &amp; Precon</span>
+        <span class="open-body">
+          <span class="ono">Step 01</span>
+          <h3>Design Assist &amp; Preconstruction</h3>
+          <p>Budgeting, value engineering, and constructability input while the drawings are still moving — so your numbers are real before the scope is bought.</p>
+        </span>
+      </button>
+      <button class="panel" type="button">
+        <span class="bg" style="background:linear-gradient(150deg,#1E4FD0,#16357E)"></span>
+        <span class="shade"></span>
+        <span class="photonote">Photo</span>
+        <span class="pno">02</span>
+        <span class="closed-label">Submittals &amp; Procurement</span>
+        <span class="open-body">
+          <span class="ono">Step 02</span>
+          <h3>Submittals &amp; Procurement</h3>
+          <p>Clean, on-time submittal packages and early material procurement that keep approvals — and your schedule — moving.</p>
+        </span>
+      </button>
+      <button class="panel" type="button">
+        <span class="bg" style="background:linear-gradient(150deg,#173E94,#101c3f)"></span>
+        <span class="shade"></span>
+        <span class="photonote">Photo</span>
+        <span class="pno">03</span>
+        <span class="closed-label">Engineering</span>
+        <span class="open-body">
+          <span class="ono">Step 03</span>
+          <h3>Engineering</h3>
+          <p>Detailed shop drawings and CNC-ready engineering that translate design intent into millimeter-accurate production data.</p>
+        </span>
+      </button>
+      <button class="panel" type="button">
+        <span class="bg" style="background:linear-gradient(150deg,#B47A35,#7a5120)"></span>
+        <span class="shade"></span>
+        <span class="photonote">Photo</span>
+        <span class="pno">04</span>
+        <span class="closed-label">Fabrication</span>
+        <span class="open-body">
+          <span class="ono">Step 04</span>
+          <h3>Fabrication</h3>
+          <p>Precision manufacturing in our Wylie facility, built to AWI standards and tracked in real time from material release to finishing.</p>
+        </span>
+      </button>
+      <button class="panel" type="button">
+        <span class="bg" style="background:linear-gradient(150deg,#0D2150,#1E4FD0)"></span>
+        <span class="shade"></span>
+        <span class="photonote">Photo</span>
+        <span class="pno">05</span>
+        <span class="closed-label">Installation</span>
+        <span class="open-body">
+          <span class="ono">Step 05</span>
+          <h3>Installation</h3>
+          <p>Experienced field crews who set the work right, coordinate with your trades, and leave the space punch-list ready.</p>
+        </span>
+      </button>
     </div>
   </div>
 </section>
@@ -502,6 +576,19 @@
 </footer>
 
 <script>
+  // ---- Process accordion ----
+  (function(){
+    var acc=document.getElementById('acc');
+    if(acc){
+      var panels=acc.querySelectorAll('.panel');
+      function activate(p){panels.forEach(function(x){x.classList.toggle('active',x===p);});}
+      panels.forEach(function(p){
+        p.addEventListener('mouseenter',function(){if(window.innerWidth>980)activate(p);});
+        p.addEventListener('click',function(){activate(p);});
+        p.addEventListener('focus',function(){if(window.innerWidth>980)activate(p);});
+      });
+    }
+  })();
   // ---- Mobile menu (simple) ----
   document.querySelector('.hamburger').addEventListener('click',function(){
     var m=document.querySelector('.menu');
